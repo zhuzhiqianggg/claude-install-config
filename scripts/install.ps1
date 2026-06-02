@@ -248,16 +248,57 @@ if ($SkipAPI) {
             theme = "dark"
             permissions = @{
                 allow = @(
-                    "Bash(git:*)", "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Bash(pnpm:*)",
-                    "Bash(python:*)", "Bash(pip:*)", "Bash(uv:*)",
-                    "Bash(ls:*)", "Bash(cat:*)", "Bash(echo:*)", "Bash(mkdir:*)",
-                    "Bash(dir:*)", "Bash(type:*)", "Bash(find:*)", "Bash(grep:*)",
-                    "Bash(head:*)", "Bash(tail:*)", "Bash(wc:*)", "Bash(sort:*)",
-                    "Bash(docker:*)", "Bash(kubectl:*)",
-                    "Bash(cargo:*)", "Bash(go:*)",
-                    "Read", "Write", "Edit", "MultiEdit", "Glob", "Grep", "LS"
+                    "Bash(git:*)", "Bash(git-*)",
+                    "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Bash(pnpm:*)", "Bash(yarn:*)", "Bash(bun:*)",
+                    "Bash(python:*)", "Bash(python3:*)", "Bash(pip:*)", "Bash(pip3:*)", "Bash(uv:*)", "Bash(poetry:*)", "Bash(conda:*)",
+                    "Bash(cargo:*)", "Bash(rustc:*)", "Bash(rustup:*)",
+                    "Bash(go:*)",
+                    "Bash(make:*)", "Bash(cmake:*)",
+                    "Bash(gcc:*)", "Bash(g++:*)", "Bash(clang:*)",
+                    "Bash(mvn:*)", "Bash(gradle:*)",
+                    "Bash(docker:*)", "Bash(docker-compose:*)",
+                    "Bash(kubectl:*)", "Bash(helm:*)",
+                    "Bash(terraform:*)", "Bash(tf:*)",
+                    "Bash(aws:*)", "Bash(gcloud:*)", "Bash(az:*)",
+                    "Bash(ssh:*)", "Bash(scp:*)", "Bash(rsync:*)",
+                    "Bash(curl:*)", "Bash(wget:*)",
+                    "Bash(tar:*)", "Bash(unzip:*)", "Bash(zip:*)",
+                    "Bash(ls:*)", "Bash(ll:*)", "Bash(la:*)", "Bash(dir:*)",
+                    "Bash(cat:*)", "Bash(head:*)", "Bash(tail:*)", "Bash(wc:*)", "Bash(sort:*)", "Bash(uniq:*)",
+                    "Bash(echo:*)", "Bash(printf:*)",
+                    "Bash(mkdir:*)", "Bash(touch:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(rmdir:*)",
+                    "Bash(chmod:*)", "Bash(chown:*)",
+                    "Bash(ln:*)",
+                    "Bash(pwd:*)", "Bash(which:*)", "Bash(whereis:*)", "Bash(whoami:*)", "Bash(where:*)", "Bash(type:*)",
+                    "Bash(env:*)", "Bash(export:*)", "Bash(printenv:*)",
+                    "Bash(grep:*)", "Bash(egrep:*)", "Bash(fgrep:*)", "Bash(rg:*)", "Bash(ag:*)", "Bash(findstr:*)",
+                    "Bash(find:*)", "Bash(locate:*)",
+                    "Bash(sed:*)", "Bash(awk:*)", "Bash(cut:*)", "Bash(tr:*)",
+                    "Bash(diff:*)", "Bash(patch:*)", "Bash(fc:*)",
+                    "Bash(tree:*)", "Bash(du:*)", "Bash(df:*)",
+                    "Bash(ps:*)", "Bash(kill:*)", "Bash(taskkill:*)",
+                    "Bash(netstat:*)", "Bash(ss:*)", "Bash(ipconfig:*)", "Bash(ifconfig:*)",
+                    "Bash(ping:*)", "Bash(nslookup:*)", "Bash(dig:*)",
+                    "Bash(jq:*)", "Bash(yq:*)",
+                    "Bash(code:*)", "Bash(vim:*)", "Bash(nano:*)", "Bash(notepad:*)",
+                    "Bash(date:*)", "Bash(time:*)",
+                    "Bash(dirname:*)", "Bash(basename:*)", "Bash(realpath:*)",
+                    "Bash(stat:*)", "Bash(file:*)",
+                    "Bash(md5sum:*)", "Bash(sha256sum:*)", "Bash(certutil:*)",
+                    "Bash(base64:*)",
+                    "Bash(hostname:*)", "Bash(uname:*)",
+                    "Bash(id:*)", "Bash(whoami:*)",
+                    "Read", "Write", "Edit", "MultiEdit", "Glob", "Grep", "LS", "New"
                 )
-                deny = @("Bash(rm -rf:*)", "Bash(format:*)", "Bash(del /s:*)", "Bash(sudo rm:*)")
+                deny = @(
+                    "Bash(rm -rf:*)", "Bash(rm -r /*:*)", "Bash(rm /*:*)",
+                    "Bash(sudo rm:*)", "Bash(sudo rm -rf:*)",
+                    "Bash(del /s:*)", "Bash(del /f:*)", "Bash(rmdir /s:*)",
+                    "Bash(format:*)", "Bash(fdisk:*)", "Bash(mkfs:*)",
+                    "Bash(shutdown:*)", "Bash(reboot:*)", "Bash(poweroff:*)",
+                    "Bash(kill -9 -1:*)",
+                    "Bash(> /etc/passwd:*)", "Bash(> /etc/shadow:*)"
+                )
             }
         }
         if ($baseUrl) {

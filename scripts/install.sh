@@ -166,8 +166,14 @@ step "Step 5/11: Configure API"
 if [ -f "$CLAUDE_DIR/settings.json" ]; then
     ok "settings.json already exists, skipping"
 else
-    info "Skipping API config (run setup_api.sh to configure)"
-    info "Or edit ~/.claude/settings.json manually"
+    template_path="$PROJECT_DIR/config/settings.json"
+    if [ -f "$template_path" ]; then
+        cp "$template_path" "$CLAUDE_DIR/settings.json"
+        ok "settings.json copied from template"
+        info "Edit ~/.claude/settings.json to add your API key"
+    else
+        info "Skipping API config (run setup_api.sh to configure)"
+    fi
 fi
 
 # Step 6: Generate CLAUDE.md
