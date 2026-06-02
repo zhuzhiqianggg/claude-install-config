@@ -88,18 +88,38 @@ ok "Git $git_ver"
 # Step 2: Install Claude Code CLI
 step "Step 2/11: Install Claude Code CLI"
 
+install_claude() {
+    local script
+    script=$(curl -fsSL https://claude.ai/install.sh 2>/dev/null) || true
+    if [ -n "$script" ] && echo "$script" | head -1 | grep -q '^#!/'; then
+        echo "$script" | bash
+        return 0
+    else
+        return 1
+    fi
+}
+
 if command -v claude &> /dev/null; then
     ver=$(claude --version 2>/dev/null || echo "unknown")
     ok "Claude Code already installed: $ver"
     choice=$(get_choice "Upgrade to latest version?" "Skip" "Upgrade")
     if [ "$choice" -eq 1 ]; then
         info "Upgrading..."
-        curl -fsSL https://claude.ai/install.sh | bash
+        if ! install_claude; then
+            warn "Cannot reach claude.ai (may need proxy)"
+            info "Try: curl -fsSL https://claude.ai/install.sh | bash"
+            info "Or use npm: npm install -g @anthropic-ai/claude-code"
+        fi
     fi
 else
     info "Installing Claude Code..."
-    curl -fsSL https://claude.ai/install.sh | bash
-    ok "Claude Code installed"
+    if install_claude; then
+        ok "Claude Code installed"
+    else
+        warn "Cannot reach claude.ai (may need proxy)"
+        info "Try: curl -fsSL https://claude.ai/install.sh | bash"
+        info "Or use npm: npm install -g @anthropic-ai/claude-code"
+    fi
 fi
 
 # Step 3: Configure environment
