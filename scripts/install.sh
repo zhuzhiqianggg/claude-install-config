@@ -102,15 +102,7 @@ install_claude() {
 if command -v claude &> /dev/null; then
     ver=$(claude --version 2>/dev/null || echo "unknown")
     ok "Claude Code already installed: $ver"
-    choice=$(get_choice "Upgrade to latest version?" "Skip" "Upgrade")
-    if [ "$choice" -eq 1 ]; then
-        info "Upgrading..."
-        if ! install_claude; then
-            warn "Cannot reach claude.ai (may need proxy)"
-            info "Try: curl -fsSL https://claude.ai/install.sh | bash"
-            info "Or use npm: npm install -g @anthropic-ai/claude-code"
-        fi
-    fi
+    ok "Skipping upgrade (use update.sh to upgrade)"
 else
     info "Installing Claude Code..."
     if install_claude; then
@@ -171,68 +163,11 @@ fi
 # Step 5: Configure API
 step "Step 5/11: Configure API"
 
-api_choice=$(get_choice "Select API provider:" \
-    "Volcengine Coding Plan (recommended for China)" \
-    "Anthropic Official API" \
-    "OpenRouter" \
-    "Skip (configure manually later)")
-
-base_url=""
-auth_token=""
-model=""
-
-case $api_choice in
-    0)
-        base_url="https://ark.cn-beijing.volces.com/api/coding"
-        auth_token=$(get_input "Enter Volcengine API Key")
-        model_choice=$(get_choice "Select default model:" \
-            "doubao-seed-code-preview-latest (Doubao Code)" \
-            "ark-code-latest (DeepSeek V3.2)" \
-            "glm-5.1 (GLM)" \
-            "doubao-seed-2.0-pro (Doubao 2.0 Pro)")
-        models=("doubao-seed-code-preview-latest" "ark-code-latest" "glm-5.1" "doubao-seed-2.0-pro")
-        model="${models[$model_choice]}"
-        ;;
-    1)
-        auth_token=$(get_input "Enter Anthropic API Key (sk-ant-...)")
-        model="claude-sonnet-4-20250514"
-        ;;
-    2)
-        base_url="https://openrouter.ai/api/v1"
-        auth_token=$(get_input "Enter OpenRouter API Key")
-        model="anthropic/claude-sonnet-4-20250514"
-        ;;
-    3)
-        info "Skipping API config"
-        ;;
-esac
-
-if [ -n "$auth_token" ]; then
-    info "Writing settings.json..."
-    cat > "$CLAUDE_DIR/settings.json" << EOF
-{
-    "env": {
-        "ANTHROPIC_AUTH_TOKEN": "$auth_token",
-        "ANTHROPIC_MODEL": "$model",
-        $(if [ -n "$base_url" ]; then echo "\"ANTHROPIC_BASE_URL\": \"$base_url\","; fi)
-        "API_TIMEOUT_MS": "600000",
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
-    },
-    "theme": "dark",
-    "permissions": {
-        "allow": [
-            "Bash(git:*)", "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Bash(pnpm:*)",
-            "Bash(python:*)", "Bash(pip:*)", "Bash(uv:*)",
-            "Bash(ls:*)", "Bash(cat:*)", "Bash(echo:*)", "Bash(mkdir:*)",
-            "Bash(find:*)", "Bash(grep:*)", "Bash(head:*)", "Bash(tail:*)",
-            "Bash(docker:*)", "Bash(kubectl:*)", "Bash(cargo:*)", "Bash(go:*)",
-            "Read", "Write", "Edit", "MultiEdit", "Glob", "Grep"
-        ],
-        "deny": ["Bash(rm -rf:*)"]
-    }
-}
-EOF
-    ok "settings.json written"
+if [ -f "$CLAUDE_DIR/settings.json" ]; then
+    ok "settings.json already exists, skipping"
+else
+    info "Skipping API config (run setup_api.sh to configure)"
+    info "Or edit ~/.claude/settings.json manually"
 fi
 
 # Step 6: Generate CLAUDE.md
@@ -301,15 +236,11 @@ fi
 # Step 9: Register MCP servers
 step "Step 9/11: Register MCP servers"
 
-mcp_choice=$(get_choice "Select MCP server preset:" \
-    "Recommended (Context7 + Sequential-Thinking + Fetch + Memory)" \
-    "Full (Recommended + Playwright + GitHub)" \
-    "Minimal (Sequential-Thinking only)" \
-    "Skip")
-
-case $mcp_choice in
-    0)
-        cat > "$CLAUDE_DIR/mcp.json" << 'EOF'
+if [ -f "$CLAUDE_DIR/mcp.json" ]; then
+    ok "mcp.json already exists, skipping"
+else
+    info "Installing recommended MCP servers..."
+    cat > "$CLAUDE_DIR/mcp.json" << 'EOF'
 {
     "mcpServers": {
         "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp"] },
@@ -319,34 +250,8 @@ case $mcp_choice in
     }
 }
 EOF
-        ok "mcp.json written (4 servers)"
-        ;;
-    1)
-        cat > "$CLAUDE_DIR/mcp.json" << 'EOF'
-{
-    "mcpServers": {
-        "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp"] },
-        "sequential-thinking": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"] },
-        "fetch": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-fetch"] },
-        "memory": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-memory"] },
-        "playwright": { "command": "npx", "args": ["-y", "@playwright/mcp@latest"] },
-        "github": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-github"] }
-    }
-}
-EOF
-        ok "mcp.json written (6 servers)"
-        ;;
-    2)
-        cat > "$CLAUDE_DIR/mcp.json" << 'EOF'
-{
-    "mcpServers": {
-        "sequential-thinking": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"] }
-    }
-}
-EOF
-        ok "mcp.json written (1 server)"
-        ;;
-esac
+    ok "mcp.json written (4 servers)"
+fi
 
 # Step 10: Verify installation
 step "Step 10/11: Verify installation"
