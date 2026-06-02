@@ -33,7 +33,7 @@ if command -v claude &> /dev/null; then
     old_ver=$(claude --version 2>/dev/null || echo "unknown")
     info "当前版本: $old_ver"
     info "正在升级..."
-    curl -fsSL https://claude.ai/install.sh | sh
+    curl -fsSL https://claude.ai/install.sh | bash
     new_ver=$(claude --version 2>/dev/null || echo "unknown")
     if [ "$new_ver" != "$old_ver" ]; then
         ok "已升级: $old_ver -> $new_ver"

@@ -94,11 +94,11 @@ if command -v claude &> /dev/null; then
     choice=$(get_choice "Upgrade to latest version?" "Skip" "Upgrade")
     if [ "$choice" -eq 1 ]; then
         info "Upgrading..."
-        curl -fsSL https://claude.ai/install.sh | sh
+        curl -fsSL https://claude.ai/install.sh | bash
     fi
 else
     info "Installing Claude Code..."
-    curl -fsSL https://claude.ai/install.sh | sh
+    curl -fsSL https://claude.ai/install.sh | bash
     ok "Claude Code installed"
 fi
 
