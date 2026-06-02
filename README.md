@@ -2,6 +2,39 @@
 
 Claude Code 一键安装、配置、升级工具。支持 Windows + Linux/macOS，自动从 GitHub clone Superpowers Skills，批量安装 21 个精选插件。
 
+## 快速安装
+
+### Windows (PowerShell)
+
+```powershell
+# 一键安装（推荐）
+iwr -UseBasicParsing "https://raw.githubusercontent.com/zhuzhiqianggg/claude-install-config/main/scripts/install.ps1" | iex
+
+# 一键更新
+iwr -UseBasicParsing "https://raw.githubusercontent.com/zhuzhiqianggg/claude-install-config/main/scripts/update.ps1" | iex
+
+# 或克隆后本地安装
+git clone https://github.com/zhuzhiqianggg/claude-install-config.git
+cd claude-install-config
+.\scripts\install.ps1
+```
+
+### Linux / macOS
+
+```bash
+# 一键安装（推荐）
+bash <(curl -s https://raw.githubusercontent.com/zhuzhiqianggg/claude-install-config/main/scripts/install.sh)
+
+# 一键更新
+bash <(curl -s https://raw.githubusercontent.com/zhuzhiqianggg/claude-install-config/main/scripts/update.sh)
+
+# 或克隆后本地安装
+git clone https://github.com/zhuzhiqianggg/claude-install-config.git
+cd claude-install-config
+chmod +x scripts/*.sh
+./scripts/install.sh
+```
+
 ## 功能特性
 
 | 功能 | 说明 |
@@ -14,25 +47,6 @@ Claude Code 一键安装、配置、升级工具。支持 Windows + Linux/macOS�
 | ⚙️ API 配置 | 火山方舟/Anthropic/OpenRouter 交互式选择 |
 | 📝 CLAUDE.md | 全局记忆模板 |
 | 📖 最佳实践 | 详细的配置指南 |
-
-## 快速开始
-
-### Windows
-
-```powershell
-git clone https://github.com/zhuzhiqianggg/claude-code-config.git
-cd claude-code-config
-.\scripts\install.ps1
-```
-
-### Linux / macOS
-
-```bash
-git clone https://github.com/zhuzhiqianggg/claude-code-config.git
-cd claude-code-config
-chmod +x scripts/*.sh
-./scripts/install.sh
-```
 
 ## 安装流程 (11步)
 
