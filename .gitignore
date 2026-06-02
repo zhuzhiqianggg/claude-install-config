@@ -1,0 +1,11 @@
+# 忽略 skills 目录（安装时从 GitHub clone 官方版本）
+skills/
+
+# 临时文件
+.trash/
+*.tmp
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db

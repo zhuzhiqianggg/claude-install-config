@@ -1,0 +1,9 @@
+{
+    "plugins": {
+        "superpowers": {
+            "type": "github",
+            "owner": "obra",
+            "repo": "superpowers"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "env": {
+        "ANTHROPIC_AUTH_TOKEN": "YOUR_API_KEY_HERE",
+        "ANTHROPIC_BASE_URL": "https://ark.cn-beijing.volces.com/api/coding",
+        "ANTHROPIC_MODEL": "doubao-seed-code-preview-latest",
+        "API_TIMEOUT_MS": "600000",
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+    },
+    "theme": "dark",
+    "permissions": {
+        "allow": [
+            "Bash(git:*)",
+            "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Bash(pnpm:*)",
+            "Bash(python:*)", "Bash(pip:*)", "Bash(uv:*)",
+            "Bash(ls:*)", "Bash(cat:*)", "Bash(echo:*)", "Bash(mkdir:*)",
+            "Bash(dir:*)", "Bash(type:*)", "Bash(find:*)", "Bash(grep:*)",
+            "Bash(head:*)", "Bash(tail:*)", "Bash(wc:*)",
+            "Read", "Write", "Edit", "MultiEdit", "Glob", "Grep", "LS"
+        ],
+        "deny": [
+            "Bash(rm -rf:*)",
+            "Bash(format:*)",
+            "Bash(del /s:*)",
+            "Bash(sudo rm:*)"
+        ]
+    }
+}
